@@ -54,11 +54,11 @@ export default function HomeHero() {
       </div>
 
       {/* Content */}
-      <div className="container-x relative z-[3] flex flex-1 flex-col justify-end pb-[clamp(56px,9vh,112px)] pt-36">
+      <div className="container-x relative z-[3] flex flex-1 flex-col justify-end pb-[clamp(88px,11vh,128px)] pt-48 lg:pt-56">
         <div className="fade-in-late" style={{ animationDelay: "0.1s" }}>
           <Positioning className="text-teal-light" />
         </div>
-        <h1 id="hero-heading" className="display-caps mt-6 max-w-[15ch] text-display">
+        <h1 id="hero-heading" className="display-caps mt-6 max-w-[15ch] text-display" style={{ fontSize: "min(var(--text-display), 12.5svh)" }}>
           {words.map((w, i) => (
             <span key={i} className="hero-word mr-[0.22em]" style={{ "--i": i }}>
               {w}
@@ -71,7 +71,7 @@ export default function HomeHero() {
             <ButtonLink href={site.cta.href} variant="solid" tone="dark">
               {site.cta.label}
             </ButtonLink>
-            <ArrowLink href="/services" className="text-white">
+            <ArrowLink href="/#services" className="text-white">
               Explore our services
             </ArrowLink>
           </div>

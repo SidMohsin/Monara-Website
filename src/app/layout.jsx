@@ -6,7 +6,7 @@ import MotionController from "@/components/motion/MotionController";
 import { site } from "@/content/site";
 import { SITE_URL, INDEXABLE } from "@/lib/seo";
 
-const jost = Jost({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--font-jost", display: "swap" });
+const jost = Jost({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-jost", display: "swap" });
 
 export const metadata = {
   // Absolute URLs for share images: the real domain once set, else the Vercel deployment URL, else local.

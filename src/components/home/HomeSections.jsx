@@ -1,43 +1,65 @@
-import { home } from "@/content/copy";
+import { home, contactCta, contactPage } from "@/content/copy";
 import { site } from "@/content/site";
 import { projects } from "@/content/work";
+import { capabilities } from "@/lib/services";
 import Media from "@/components/media/Media";
+import FrameMarks from "@/components/media/FrameMarks";
 import SectionHeader from "@/components/sections/SectionHeader";
 import WorkCard from "@/components/work/WorkCard";
-import { ArrowLink } from "@/components/ui/Links";
+import ContactForm from "@/components/contact/ContactForm";
 import Draft from "@/components/ui/Draft";
 import CapabilityList from "./CapabilityList";
 import Positioning from "@/components/brand/Positioning";
 
-export function Intro() {
+/* One-page site. Section order follows the reference home page:
+   hero → about/intro → capabilities → (work, once real projects exist) → story band → contact. */
+
+/** Shows the studio name in bold within client copy (wording unchanged). */
+function boldMonara(text) {
+  return text.split(/(Monara)/).map((part, i) => (part === "Monara" ? <strong key={i} className="font-semibold">{part}</strong> : part));
+}
+
+/** About: Sheet3 introduction (client wording) + studio image. */
+export function About() {
   const [first, ...rest] = home.intro;
+  const a = home.aboutPreview;
   return (
-    <section aria-label="Introduction" className="container-x section-y">
-      <div className="grid gap-12 lg:grid-cols-12">
-        <p className="eyebrow text-teal lg:col-span-3" data-reveal>
-          {site.name}
-        </p>
-        <div className="lg:col-span-9">
-          <p className="text-[clamp(1.5rem,1.1rem+1.7vw,2.75rem)] font-light leading-[1.25]" data-reveal>
-            {first}
+    <section id="about" aria-labelledby="about-heading" className="container-x section-y">
+      <SectionHeader index="01" eyebrow="About" title={<Draft on={a.draft}>{a.heading}</Draft>} id="about-heading" />
+      <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-20">
+        <div className="lg:col-span-7">
+          {/* Raghav: stronger weight for the lead, "Monara" in bold */}
+          <p className="text-[clamp(1.5rem,1.1rem+1.7vw,2.75rem)] font-normal leading-[1.25]" data-reveal>
+            {boldMonara(first)}
           </p>
-          <div className="mt-12 grid gap-8 text-muted md:grid-cols-2 md:gap-12">
+          {/* Raghav: centre line between the two columns */}
+          <div className="mt-12 grid gap-8 text-muted md:grid-cols-2 md:gap-0 md:divide-x md:divide-line">
             {rest.map((p, i) => (
-              <p key={i} data-reveal style={{ "--reveal-i": i + 1 }}>
+              <p key={i} className="md:px-10 md:first:pl-0 md:last:pr-0" data-reveal style={{ "--reveal-i": i + 1 }}>
                 {p}
               </p>
             ))}
           </div>
+        </div>
+        <div className="lg:col-span-5">
+          <Media id="home-about" sizes="(min-width: 1024px) 35vw, 100vw" />
         </div>
       </div>
     </section>
   );
 }
 
-export function Capabilities() {
+/** Services: the nine capabilities; each row opens in place with its service list. */
+export function Services() {
   return (
-    <section aria-labelledby="capabilities-heading" className="container-x pb-[clamp(80px,12vw,176px)]">
-      <SectionHeader index="01" eyebrow="What we do" title={home.capabilitiesHeading} id="capabilities-heading" aside={<ArrowLink href="/services">All services</ArrowLink>} />
+    <section id="services" aria-labelledby="services-heading" className="container-x pb-[clamp(80px,12vw,176px)]">
+      <SectionHeader
+        index="02"
+        eyebrow="What we do"
+        title={home.capabilitiesHeading}
+        id="services-heading"
+        aside={<p className="max-w-xs text-[15px] text-muted">Open a capability to see everything it covers.</p>}
+      />
       <div className="mt-12">
         <CapabilityList />
       </div>
@@ -45,13 +67,13 @@ export function Capabilities() {
   );
 }
 
+/** Work: hidden on the one-page site until real projects are supplied (kept for later). */
 export function FeaturedWork() {
   const [a, b, c, d] = projects;
   return (
-    <section aria-labelledby="work-heading" className="bg-mist">
+    <section id="work" aria-labelledby="work-heading" className="bg-mist">
       <div className="container-x section-y">
-        <SectionHeader index="02" eyebrow="Selected work" title={<Draft on={home.workHeading.draft}>{home.workHeading.text}</Draft>} id="work-heading" aside={<ArrowLink href="/work">View all work</ArrowLink>} />
-        {/* Mixed aspect ratios, asymmetric two-column rhythm */}
+        <SectionHeader index="03" eyebrow="Selected work" title={<Draft on={home.workHeading.draft}>{home.workHeading.text}</Draft>} id="work-heading" />
         <div className="mt-14 grid gap-x-[clamp(24px,4vw,64px)] gap-y-16 md:grid-cols-12">
           <WorkCard project={a} ratio="16/9" className="md:col-span-7" />
           <WorkCard project={b} ratio="4/5" className="md:col-span-5 md:mt-32" sizes="(min-width: 768px) 40vw, 100vw" />
@@ -94,31 +116,80 @@ export function StoryBand() {
   );
 }
 
-export function AboutPreview() {
-  const a = home.aboutPreview;
+// PLACEHOLDER contact values come from src/content/site.js; links stay disabled until real details are set.
+function Ph({ children }) {
   return (
-    <section aria-labelledby="about-heading" className="container-x section-y">
-      <div className="grid items-center gap-12 md:grid-cols-12 lg:gap-20">
-        <div className="md:col-span-5">
-          <Media id="home-about" sizes="(min-width: 768px) 40vw, 100vw" />
-        </div>
-        <div className="md:col-span-7">
-          <p className="eyebrow flex items-center gap-3 text-teal" data-reveal>
-            <span className="tabular">03</span>
-            <span aria-hidden="true" className="h-px w-8 bg-teal/60" />
-            About
+    <span className="text-ink/70" title="Placeholder: to be supplied by the client">
+      {children}
+    </span>
+  );
+}
+
+function Row({ label, children }) {
+  return (
+    <div className="border-t border-line py-5">
+      <dt className="eyebrow text-muted">{label}</dt>
+      <dd className="mt-2 text-[17px]">{children}</dd>
+    </div>
+  );
+}
+
+/** Contact: Sheet3 closing words, then the enquiry form and contact details. Target of every "Start Your Project" button. */
+export function Contact() {
+  const c = site.contact;
+  return (
+    <section id="contact" aria-labelledby="contact-heading">
+      <div className="grain relative overflow-hidden bg-teal text-white">
+        <FrameMarks thirds={false} inset="clamp(16px,3vw,36px)" />
+        <div className="container-x relative z-[3] py-[clamp(88px,12vw,168px)]">
+          <p className="eyebrow text-white" data-reveal>
+            {site.tagline}
           </p>
-          <h2 id="about-heading" className="display-caps mt-6 text-h2" data-reveal style={{ "--reveal-i": 1 }}>
-            <Draft on={a.draft}>{a.heading}</Draft>
+          <h2 id="contact-heading" className="display-caps mt-6 max-w-5xl text-h1" data-reveal style={{ "--reveal-i": 1 }}>
+            {contactCta.heading}
           </h2>
-          <p className="mt-8 max-w-xl text-lead font-light text-ink/80" data-reveal style={{ "--reveal-i": 2 }}>
-            {a.body}
+          <p className="mt-10 max-w-3xl text-lead font-light text-white/85" data-reveal style={{ "--reveal-i": 2 }}>
+            {contactCta.body}
           </p>
-          <div className="mt-10" data-reveal style={{ "--reveal-i": 3 }}>
-            <ArrowLink href="/about" className="text-teal">
-              {a.link}
-            </ArrowLink>
+        </div>
+      </div>
+
+      <div className="container-x section-y">
+        <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
+          <div className="lg:col-span-7" data-reveal>
+            <h3 className="display-caps text-h2">{contactPage.heading}</h3>
+            <p className="mt-4 max-w-xl text-muted">
+              <Draft on={contactPage.intro.draft}>{contactPage.intro.text}</Draft>
+            </p>
+            <div className="mt-10">
+              <ContactForm capabilities={capabilities.map(({ slug, title }) => ({ slug, title }))} fallbackEmail={c.email} />
+            </div>
           </div>
+
+          <aside className="lg:col-span-5" aria-labelledby="details-h">
+            <h3 id="details-h" className="eyebrow text-teal" data-reveal>
+              Contact details
+            </h3>
+            <dl className="mt-6 border-b border-line" data-reveal style={{ "--reveal-i": 1 }}>
+              <Row label="Email">{c.email && !c.email.includes("yourdomain") ? <a href={`mailto:${c.email}`} className="link-underline">{c.email}</a> : <Ph>{c.email}</Ph>}</Row>
+              <Row label="Phone">{c.phoneHref ? <a href={c.phoneHref} className="link-underline">{c.phone}</a> : <Ph>{c.phone}</Ph>}</Row>
+              <Row label="WhatsApp">{c.whatsappHref ? <a href={c.whatsappHref} target="_blank" rel="noopener noreferrer" className="link-underline">{c.whatsapp}</a> : <Ph>{c.whatsapp}</Ph>}</Row>
+              <Row label="Studio">
+                {c.address.map((l) => (
+                  <span key={l} className="block">
+                    <Ph>{l}</Ph>
+                  </span>
+                ))}
+              </Row>
+              <Row label="Follow">
+                <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                  {site.social.map((s) => (
+                    <li key={s.label}>{s.href ? <a href={s.href} target="_blank" rel="noopener noreferrer" className="link-underline">{s.label}</a> : <Ph>{s.label}</Ph>}</li>
+                  ))}
+                </ul>
+              </Row>
+            </dl>
+          </aside>
         </div>
       </div>
     </section>

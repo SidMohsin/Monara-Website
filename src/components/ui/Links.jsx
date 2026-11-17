@@ -1,4 +1,10 @@
-import Link from "next/link";
+import NextLink from "next/link";
+
+// In-page section links ("/#contact") are plain anchors so the browser scrolls natively
+// (and fires `hashchange`, which opens service rows); everything else uses next/link.
+export function Link({ href, ...rest }) {
+  return typeof href === "string" && (href.startsWith("#") || href.startsWith("/#")) ? <a href={href} {...rest} /> : <NextLink href={href} {...rest} />;
+}
 
 export function Arrow({ className = "" }) {
   return (

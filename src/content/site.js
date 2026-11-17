@@ -38,14 +38,15 @@ export const site = {
     { label: "YouTube", href: null },
   ],
 
+  // One-page site: menu items scroll to sections of the home page.
+  // "Work" returns (id "work") once real projects are supplied.
+  // "Contact" is reached through the CTA button only (no duplicate menu item).
   nav: [
-    { label: "Services", href: "/services" },
-    { label: "Work", href: "/work" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "About", href: "/#about", id: "about" },
+    { label: "Services", href: "/#services", id: "services" },
   ],
 
-  cta: { label: "Start Your Project", href: "/contact" }, // Sheet3 wording
+  cta: { label: "Start Your Project", href: "/#contact", id: "contact" }, // Sheet3 wording
 };
 
 // Whether a value is still a placeholder (used to show review markers / disable links)

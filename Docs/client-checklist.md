@@ -1,8 +1,19 @@
 # MONARA Productions: Client Checklist
 
-Last updated: 2026-11-16 (Phases 3–4: build and QA)
+Last updated: 2026-11-17 (one-page restructure)
 
-**Decisions so far:**
+**Latest decisions (2026-11-17, after Shristi's review):**
+
+- **One-page site, for now.** There isn't enough content yet for separate pages. Home now holds everything: Hero → About → Services → "Every Frame Tells a Story" → Contact (form + details).
+  - Each of the 9 services opens in place to show its full description and service list (Smart Tech: 51 services in 7 areas).
+  - The separate Services, service, Work, project, About and Contact pages are parked in `src/app/_later/` (code kept, not published). Their old addresses forward to the matching home-page section.
+  - Privacy Policy stays as its own page (the form links to it).
+- **Menu:** About · Services, plus the "Start Your Project" button. "Contact" was removed from the menu because it duplicated the button; both led to the same place.
+- **Work is hidden** until real projects (images + client permission) are supplied. It returns as a section after Services, with "Work" back in the menu.
+- **Design:** the current design is approved ("looking fine"). ❗ **Fonts to change: awaiting Raghav's choice.** The font is set in one place (`src/app/layout.jsx`), so the swap is quick.
+- The navbar stays visible at all times (no hide-on-scroll).
+
+**Earlier decisions (the navigation line is superseded by the above):**
 
 - Content follows Option A. The "Sheet3" tab decides the structure and wording, and the "Service Categorization" tab supplies the service lists.
 - The technology area is called "Smart Tech", not "Digital".

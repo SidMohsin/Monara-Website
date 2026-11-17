@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Link as SectionLink } from "@/components/ui/Links";
 import Logo from "@/components/brand/Logo";
 import { site } from "@/content/site";
 import { capabilities } from "@/lib/services";
@@ -31,9 +32,9 @@ export default function Footer() {
             <ul className="mt-6 space-y-2.5 text-[15px]">
               {capabilities.map((c) => (
                 <li key={c.slug}>
-                  <Link href={`/services/${c.slug}`} className="link-underline text-white/80 hover:text-white">
+                  <SectionLink href={`/#${c.slug}`} className="link-underline text-white/80 hover:text-white">
                     {c.title}
-                  </Link>
+                  </SectionLink>
                 </li>
               ))}
             </ul>
@@ -42,11 +43,11 @@ export default function Footer() {
           <nav aria-label="Company" className="lg:col-span-2">
             <h2 className="eyebrow text-muted-dark">Company</h2>
             <ul className="mt-6 space-y-2.5 text-[15px]">
-              {[{ label: "Home", href: "/" }, ...site.nav, { label: "Privacy Policy", href: "/privacy-policy" }].map((n) => (
+              {[{ label: "Home", href: "/#main" }, ...site.nav, { label: site.cta.label, href: site.cta.href }, { label: "Privacy Policy", href: "/privacy-policy" }].map((n) => (
                 <li key={n.href}>
-                  <Link href={n.href} className="link-underline text-white/80 hover:text-white">
+                  <SectionLink href={n.href} className="link-underline text-white/80 hover:text-white">
                     {n.label}
-                  </Link>
+                  </SectionLink>
                 </li>
               ))}
             </ul>

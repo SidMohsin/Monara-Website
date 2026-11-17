@@ -18,7 +18,7 @@ export default function NotFound() {
           <ButtonLink href="/" variant="solid" tone="dark">
             Back to home
           </ButtonLink>
-          <ArrowLink href="/services" className="text-white">
+          <ArrowLink href="/#services" className="text-white">
             Our services
           </ArrowLink>
         </div>
