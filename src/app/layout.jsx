@@ -1,4 +1,5 @@
 import { Jost } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -37,6 +38,8 @@ export default function RootLayout({ children }) {
         <main id="main">{children}</main>
         <Footer />
         <MotionController />
+        {/* Vercel Web Analytics: cookieless page-view counts; only reports when hosted on Vercel */}
+        <Analytics />
       </body>
     </html>
   );
