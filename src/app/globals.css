@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   Palette is teal + black from the logo, plus neutrals. No other hues. */
+@theme {
+  --color-ink: #000000;
+  --color-ink-soft: #111414;
+  --color-ink-line: #262b2b;
+  --color-teal: #096b6c; /* sampled from the logo */
+  --color-teal-deep: #075253; /* hover / pressed on light */
+  --color-teal-light: #5fb3b3; /* teal text on black (8.6:1) */
+  --color-paper: #ffffff;
+  --color-mist: #f3f5f5;
+  --color-line: #e2e7e7;
+  --color-muted: #5c6666; /* secondary text on light (5.9:1) */
+  --color-muted-dark: #9aa3a3; /* secondary text on dark (8.1:1) */
+
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --text-display: clamp(2.75rem, 1.2rem + 6.4vw, 8rem);
+  --text-display--line-height: 0.95;
+  --text-h1: clamp(2.5rem, 1.6rem + 4vw, 5.5rem);
+  --text-h1--line-height: 1;
+  --text-h2: clamp(2rem, 1.5rem + 2.2vw, 3.5rem);
+  --text-h2--line-height: 1.05;
+  --text-h3: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+  --text-h3--line-height: 1.2;
+  --text-lead: clamp(1.25rem, 1.05rem + 0.9vw, 2rem);
+  --text-lead--line-height: 1.35;
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1.2;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+  @media (min-width: 1024px) {
+    body { font-size: 1.125rem; }
+  }
+  ::selection {
+    background: var(--color-teal);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible,
+  .bg-ink :focus-visible {
+    outline-color: var(--color-teal-light);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+}
+
+/* ───────────────────────── Utilities ───────────────────────── */
+@utility container-x {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 80px);
+}
+@utility section-y {
+  padding-block: clamp(80px, 12vw, 176px);
+}
+@utility eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: 1.2;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+@utility display-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Film grain used by placeholders and dark bands */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.14;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* ───────────────────────── Motion ─────────────────────────
+   Content is visible by default; motion is only applied once JS has run
+   (html.js) and the visitor has not asked for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.8s var(--ease-out-soft),
+      transform 0.8s var(--ease-out-soft);
+    transition-delay: calc(var(--reveal-i, 0) * 70ms);
+  }
+  /* wipe: the observed element stays unclipped (so IntersectionObserver sees it); its children are clipped */
+  html.js [data-reveal="wipe"] {
+    opacity: 1;
+    transform: none;
+  }
+  html.js [data-reveal="wipe"] > * {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.1s var(--ease-out-soft);
+    transition-delay: calc(var(--reveal-i, 0) * 70ms);
+  }
+  html.js [data-reveal="wipe"].is-visible > * {
+    clip-path: inset(0 0 0 0);
+  }
+  html.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .draw-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 2.4s var(--ease-out-soft) 0.3s forwards;
+  }
+  .rec-dot {
+    animation: rec 2s ease-in-out infinite;
+  }
+  .marquee-track {
+    animation: marquee 40s linear infinite;
+  }
+  .hero-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.4em);
+    animation: rise 1s var(--ease-out-soft) forwards;
+    animation-delay: calc(0.15s + var(--i, 0) * 90ms);
+  }
+  .fade-in-late {
+    opacity: 0;
+    animation: fade 1s ease forwards 1.1s;
+  }
+}
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes rec { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes fade { to { opacity: 1; } }
+
+/* Underline-on-hover link */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-out-soft);
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ───────────────────────── In-row hover previews ─────────────────────────
+   Anchored inside each capability row (never fixed / cursor-following).
+   Only on devices with a real hover pointer and when motion is allowed. */
+.cap-preview {
+  opacity: 0;
+  transform: scale(0.94);
+  pointer-events: none;
+  transition:
+    opacity 0.35s var(--ease-out-soft),
+    transform 0.5s var(--ease-out-soft);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cap-row:hover .cap-preview {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* set by PreviewGuard on scroll / click / pointer leave / blur */
+[data-suppress] .cap-preview {
+  opacity: 0 !important;
+  transform: scale(0.94) !important;
+  transition-duration: 0.12s;
+}
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .cap-preview { display: none; }
+}
+
+/* Safety net: nothing may widen the page. `clip` (unlike `hidden`) keeps position: sticky working. */
+html,
+body {
+  overflow-x: clip;
+}
