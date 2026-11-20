@@ -188,8 +188,27 @@
   transform: scale(0.94);
   pointer-events: none;
   transition:
-    opacity 0.35s var(--ease-out-soft),
-    transform 0.5s var(--ease-out-soft);
+    opacity var(--cap-t) var(--ease-out-soft),
+    transform var(--cap-t) var(--ease-out-soft);
+}
+
+/* Capability rows (Raghav's choice): hover fades the row to solid teal with white text,
+   the same look as an open row (open-state classes in CapabilityList).
+   Every part shares one timing (--cap-t) so the row changes as one, with no blink. */
+:root {
+  --cap-t: 0.45s;
+}
+@media (hover: hover) {
+  details:not([open]) > .cap-row:hover {
+    background-color: var(--color-teal);
+    color: #fff;
+  }
+  details:not([open]) > .cap-row:hover .cap-toggle {
+    border-color: #fff;
+  }
+  details:not([open]) > .cap-row:hover .cap-excerpt {
+    color: rgb(255 255 255 / 0.85);
+  }
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .cap-row:hover .cap-preview {

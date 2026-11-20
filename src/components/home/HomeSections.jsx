@@ -1,7 +1,7 @@
 import { home, contactCta, contactPage } from "@/content/copy";
 import { site } from "@/content/site";
 import { projects } from "@/content/work";
-import { capabilities } from "@/lib/services";
+import { capabilities, umbrella } from "@/lib/services";
 import Media from "@/components/media/Media";
 import FrameMarks from "@/components/media/FrameMarks";
 import SectionHeader from "@/components/sections/SectionHeader";
@@ -28,8 +28,8 @@ export function About() {
       <SectionHeader index="01" eyebrow="About" title={<Draft on={a.draft}>{a.heading}</Draft>} id="about-heading" />
       <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-20">
         <div className="lg:col-span-7">
-          {/* Raghav: stronger weight for the lead, "Monara" in bold */}
-          <p className="text-[clamp(1.5rem,1.1rem+1.7vw,2.75rem)] font-normal leading-[1.25]" data-reveal>
+          {/* Raghav: stronger weight for the lead, "Monara" in bold, slightly smaller size */}
+          <p className="text-[clamp(1.375rem,1rem+0.9vw,1.875rem)] font-normal leading-[1.35]" data-reveal>
             {boldMonara(first)}
           </p>
           {/* Raghav: centre line between the two columns */}
@@ -53,13 +53,13 @@ export function About() {
 export function Services() {
   return (
     <section id="services" aria-labelledby="services-heading" className="container-x pb-[clamp(80px,12vw,176px)]">
-      <SectionHeader
-        index="02"
-        eyebrow="What we do"
-        title={home.capabilitiesHeading}
-        id="services-heading"
-        aside={<p className="max-w-xs text-[15px] text-muted">Open a capability to see everything it covers.</p>}
-      />
+      {/* footer and old /services/360-campaigns links land here */}
+      <span id={umbrella.slug} aria-hidden="true" className="block" />
+      <SectionHeader title={home.servicesHeading} id="services-heading" />
+      {/* 360° Campaigns description (client wording) introduces the eight capabilities */}
+      <p className="mt-8 max-w-3xl text-[17px] leading-relaxed text-muted lg:text-[19px]" data-reveal style={{ "--reveal-i": 2 }}>
+        {umbrella.summary}
+      </p>
       <div className="mt-12">
         <CapabilityList />
       </div>

@@ -6,6 +6,13 @@ export function getCapability(slug) {
   return capabilities.find((c) => c.slug === slug);
 }
 
+/**
+ * One-page services section: 360° Campaigns is the section heading and its
+ * description the intro; the other eight capabilities are the rows below it.
+ */
+export const umbrella = getCapability("360-campaigns");
+export const listedCapabilities = capabilities.filter((c) => c.slug !== umbrella.slug);
+
 /** Visible services of a group (hidden ones such as "Claude AI campaign" are excluded). */
 export function visibleServices(list = []) {
   return list.filter((s) => !s.hidden);

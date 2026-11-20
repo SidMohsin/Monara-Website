@@ -57,6 +57,7 @@ const artAt = (art, j) => (j === 0 ? art : ALT_ART[art][j - 1]);
 const serviceSlots = capabilities.flatMap((c) => [
   { id: `svc-${c.slug}-hero`, page: `Services / ${c.title}`, section: "Hero", ratio: "21/9", subject: `${c.title}: key visual`, art: CAP_ART[c.slug] },
   { id: `svc-${c.slug}-card`, page: "Home + Services overview", section: `${c.title} preview`, ratio: "4/3", subject: `${c.title}: preview`, art: CAP_ART[c.slug] },
+  { id: `svc-${c.slug}-video`, page: "Home / Services", section: `${c.title}, opened row`, type: "video", ratio: "16/9", subject: `${c.title}: video`, art: CAP_ART[c.slug], note: "MP4, landscape 16:9, short loop, no sound, plus a poster frame." },
   { id: `svc-${c.slug}-g1`, page: `Services / ${c.title}`, section: "Gallery", ratio: "4/5", subject: `${c.title}: example 1`, art: artAt(CAP_ART[c.slug], 0) },
   { id: `svc-${c.slug}-g2`, page: `Services / ${c.title}`, section: "Gallery", ratio: "4/5", subject: `${c.title}: example 2`, art: artAt(CAP_ART[c.slug], 1) },
   { id: `svc-${c.slug}-g3`, page: `Services / ${c.title}`, section: "Gallery", ratio: "4/5", subject: `${c.title}: example 3`, art: artAt(CAP_ART[c.slug], 2) },

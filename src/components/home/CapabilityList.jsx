@@ -1,22 +1,32 @@
-import { capabilities, getCapability, visibleGroups, serviceCount, pad } from "@/lib/services";
+import { listedCapabilities } from "@/lib/services";
 import Media from "@/components/media/Media";
-import ServiceGroups from "@/components/services/ServiceGroups";
 import PreviewGuard from "./PreviewGuard";
 
 /**
- * One-page site: the nine Sheet3 capabilities as an accordion.
+ * One-page site: the eight Sheet3 capabilities under the 360° Campaigns heading, as an accordion.
  * Each row is a native <details>, so it works without JavaScript, with the
  * keyboard and with screen readers. Opening a row shows the full client
- * description and the service list from the workbook in place.
+ * description beside the capability's video (placeholder until supplied).
  * `/#<slug>` links open the matching row (see HashOpener).
  *
- * Row grid (lg): index 1 · title 4 · preview 2 · description 4 · toggle 1.
+ * Row grid (lg): title 5 · preview 2 · description 4 · toggle 1.
+ * Hover and open: solid teal with white text (Raghav's choice; hover rules in globals.css).
  * The hover preview lives in its own cell, so it never covers text
  * (PreviewGuard hides it on scroll/click/blur; CSS disables it on touch/reduced motion).
  */
+/* One timing for every part of the row (matches --cap-t in globals.css). */
+const ease = "transition-colors duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]";
+
+/** Closed-row excerpt: cut on a whole word so it never ends mid-word ("…assiste…"). */
+function excerpt(text, max = 110) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:.–-]+$/, "") + "…";
+}
+
 function Toggle() {
   return (
-    <span aria-hidden="true" className="relative flex h-9 w-9 items-center justify-center rounded-full border border-line transition-colors group-hover/row:border-teal group-hover/row:text-teal group-open/cap:border-white group-open/cap:bg-white group-open/cap:text-teal">
+    <span aria-hidden="true" className={`cap-toggle relative flex h-9 w-9 items-center justify-center rounded-full border border-line ${ease} group-open/cap:border-white group-open/cap:bg-white group-open/cap:text-teal`}>
       <span className="absolute h-px w-3.5 bg-current" />
       <span className="absolute h-3.5 w-px bg-current transition-transform duration-300 group-open/cap:scale-y-0" />
     </span>
@@ -24,40 +34,13 @@ function Toggle() {
 }
 
 function Body({ c }) {
-  const groups = visibleGroups(c);
-  const count = serviceCount(c);
   return (
-    <div className="bg-teal/[0.06] px-4 pb-14 pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-6">
-      <div className="min-w-0 lg:col-span-11 lg:col-start-2">
-        {/* Full client description (the row shows a 3-line excerpt) */}
-        <p className="max-w-3xl text-lead text-ink/85">{c.summary}</p>
-
-        {/* 360° Campaigns: its three capabilities */}
-        {c.children && (
-          <div className="mt-10">
-            <p className="eyebrow text-muted">Includes</p>
-            <ul className="mt-4 flex flex-wrap gap-3">
-              {c.children.map((s) => (
-                <li key={s}>
-                  <a href={`#${s}`} className="inline-flex items-center gap-3 border border-line px-4 py-2.5 text-[15px] transition-colors hover:border-teal hover:text-teal">
-                    <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-teal" />
-                    {getCapability(s).title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Workbook service list (Creative & Brand has none yet: description only) */}
-        {count > 0 && (
-          <div className="mt-10">
-            <p className="eyebrow mb-6 text-muted">
-              {count} services
-            </p>
-            <ServiceGroups groups={groups} capabilityTitle={c.title} idPrefix={c.slug} />
-          </div>
-        )}
+    <div className="grid gap-8 bg-teal/[0.06] px-4 pb-12 pt-8 lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:px-6 lg:pb-14 lg:pt-10">
+      {/* Full client description (the closed row shows a 3-line excerpt) */}
+      <p className="min-w-0 text-[17px] leading-relaxed text-ink/85 lg:col-span-5 lg:text-[19px]">{c.summary}</p>
+      {/* Capability video, plays muted on loop once the file is supplied */}
+      <div className="min-w-0 lg:col-span-6 lg:col-start-7">
+        <Media id={`svc-${c.slug}-video`} reveal={false} sizes="(min-width: 1024px) 45vw, 100vw" />
       </div>
     </div>
   );
@@ -66,18 +49,11 @@ function Body({ c }) {
 export default function CapabilityList() {
   return (
     <PreviewGuard as="ul" className="border-b border-line">
-      {capabilities.map((c, i) => (
+      {listedCapabilities.map((c, i) => (
         <li key={c.slug} data-reveal style={{ "--reveal-i": i % 4 }}>
           <details id={c.slug} className="group/cap border-t border-line">
-            <summary className="cap-row group/row grid cursor-pointer list-none grid-cols-[2.5rem_1fr_auto] items-start gap-x-4 px-4 py-7 transition-colors duration-300 hover:bg-mist md:grid-cols-[4rem_1fr_auto] lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:px-6 lg:py-9 group-open/cap:bg-teal group-open/cap:text-white [&::-webkit-details-marker]:hidden">
-              <span className="tabular pt-1 text-sm text-muted group-open/cap:text-white/75 lg:col-span-1 lg:pt-0">{pad(i + 1)}</span>
-
-              <span className="min-w-0 lg:col-span-4">
-                <h3 className="display-caps text-[clamp(1.375rem,1rem+1.4vw,2.25rem)] leading-tight transition-colors duration-300 group-hover/row:text-teal group-open/cap:text-white">
-                  {c.title}
-                </h3>
-                {c.parent && <span className="mt-2 block text-[11px] uppercase tracking-[0.18em] text-teal group-open/cap:text-white/80">Part of 360° Campaigns</span>}
-              </span>
+            <summary className={`cap-row group/row grid cursor-pointer list-none grid-cols-[1fr_auto] items-start gap-x-4 px-4 py-7 ${ease} lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:px-6 lg:py-9 group-open/cap:bg-teal group-open/cap:text-white [&::-webkit-details-marker]:hidden`}>
+              <h3 className={`display-caps min-w-0 ${ease} text-[clamp(1.375rem,1rem+1.4vw,2.25rem)] leading-tight lg:col-span-5`}>{c.title}</h3>
 
               {/* Preview cell: desktop only, reserved space so it never overlaps text */}
               <span aria-hidden="true" className="relative hidden self-stretch lg:col-span-2 lg:block">
@@ -86,9 +62,9 @@ export default function CapabilityList() {
                 </span>
               </span>
 
-              <span className="col-start-2 mt-3 line-clamp-3 min-w-0 text-[15px] leading-relaxed text-muted group-open/cap:hidden lg:col-span-4 lg:col-start-auto lg:mt-0">{c.summary}</span>
+              <span className={`cap-excerpt col-start-1 mt-3 line-clamp-3 min-w-0 text-[15px] leading-relaxed text-muted ${ease} group-open/cap:hidden lg:col-span-4 lg:col-start-auto lg:mt-0`}>{excerpt(c.summary)}</span>
 
-              <span className="col-start-3 row-start-1 flex items-center pt-0.5 lg:col-span-1 lg:col-start-12 lg:row-start-auto lg:justify-end lg:pt-0">
+              <span className="col-start-2 row-start-1 flex items-center pt-0.5 lg:col-span-1 lg:col-start-12 lg:row-start-auto lg:justify-end lg:pt-0">
                 <Toggle />
               </span>
             </summary>
