@@ -34,20 +34,22 @@ function Toggle() {
   );
 }
 
+// Desktop rows are at least ROW_MIN tall; previews keep a 12px margin inside them (no crop, no overflow).
+const ROW_MIN = 220;
+const PREVIEW_MAX = ROW_MIN - 24;
+
 /** Hover preview sized to its image's shape (placeholders keep the old landscape fill). */
 function PreviewFrame({ id }) {
   const m = getMedia(id);
   const shaped = m.w && m.h;
-  const portrait = shaped && m.h > m.w; // square images take the landscape (full-width) path
   const frame = !shaped
     ? "absolute inset-x-0 -inset-y-5"
-    : portrait
-      ? "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" // floats a little past the row
-      : "absolute inset-x-0 top-1/2 -translate-y-1/2";
-  // portrait: up to 220px tall, but never wider than the cell (height follows the shape)
-  const style = shaped ? { aspectRatio: `${m.w}/${m.h}`, ...(portrait && { width: `min(100%, ${Math.round((220 * m.w) / m.h)}px)` }) } : undefined;
+    : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2";
+  // Fits fully inside the row (rows are at least 220px tall on desktop): at most
+  // PREVIEW_MAX px tall and never wider than its cell; height follows the image's shape.
+  const style = shaped ? { aspectRatio: `${m.w}/${m.h}`, width: `min(100%, ${Math.round((PREVIEW_MAX * m.w) / m.h)}px)` } : undefined;
   return (
-    <span className={`${frame} z-10 block`} style={style}>
+    <span className={`${frame} block`} style={style}>
       <span className="cap-preview absolute inset-0 block overflow-hidden">
         <Media id={id} fill label={false} reveal={false} sizes="220px" />
       </span>
@@ -78,12 +80,12 @@ export default function CapabilityList() {
       {listedCapabilities.map((c, i) => (
         <li key={c.slug} data-reveal style={{ "--reveal-i": i % 4 }}>
           <details id={c.slug} className="group/cap border-t border-line">
-            <summary className={`cap-row group/row grid cursor-pointer list-none grid-cols-[1fr_auto] items-start gap-x-4 px-4 py-7 ${ease} lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:px-6 lg:py-9 group-open/cap:bg-teal group-open/cap:text-white [&::-webkit-details-marker]:hidden`}>
+            <summary className={`cap-row group/row grid cursor-pointer list-none grid-cols-[1fr_auto] items-start gap-x-4 px-4 py-7 ${ease} lg:min-h-[220px] lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:px-6 lg:py-9 group-open/cap:bg-teal group-open/cap:text-white [&::-webkit-details-marker]:hidden`}>
               <h3 className={`display-caps min-w-0 ${ease} text-[clamp(1.375rem,1rem+1.4vw,2.25rem)] leading-tight lg:col-span-5`}>{c.title}</h3>
 
               {/* Preview cell: desktop only, reserved space so it never overlaps text.
                   The preview takes its image's own shape, so nothing is cropped:
-                  portrait = a 220px-tall card centred on the row, landscape = full cell width. */}
+                  it sits fully inside the (slightly taller) row, centred, never cropped. */}
               <span aria-hidden="true" className="relative hidden self-stretch lg:col-span-2 lg:block">
                 <PreviewFrame id={`svc-${c.slug}-card`} />
               </span>
