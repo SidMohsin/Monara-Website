@@ -3,6 +3,7 @@ import { site } from "@/content/site";
 import { projects } from "@/content/work";
 import { capabilities, umbrella } from "@/lib/services";
 import Media from "@/components/media/Media";
+import { getMedia } from "@/content/media";
 import FrameMarks from "@/components/media/FrameMarks";
 import SectionHeader from "@/components/sections/SectionHeader";
 import WorkCard from "@/components/work/WorkCard";
@@ -110,7 +111,7 @@ export function StoryBand() {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-right text-[10px] uppercase tracking-[0.2em] text-white/40">Background: placeholder · behind-the-scenes footage</p>
+        {getMedia("home-story").status !== "final" && <p className="mt-6 text-right text-[10px] uppercase tracking-[0.2em] text-white/40">Background: placeholder · behind-the-scenes footage</p>}
       </div>
     </section>
   );

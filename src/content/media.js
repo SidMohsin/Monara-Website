@@ -79,8 +79,41 @@ export const media = Object.fromEntries(
   ]),
 );
 
-// Real files go here once supplied, e.g.:
-// media["home-hero"] = { ...media["home-hero"], src: "/media/hero.mp4", poster: "/media/hero-poster.jpg", alt: "", status: "final" };
+// ── Real files (client folder Monara_content/HOMEPAGE, optimised into /public/media) ──
+// `w`/`h`: the file's own size. Opened-row ("inside") slots take the file's own shape so
+// portrait work is never cropped; hover previews fill their cell (`position` = focal point).
+// Videos are muted loops (aria-hidden), so they need no alt text.
+const FILES = {
+  // Hover previews (folder "outcover")
+  "svc-photography-card": { src: "/media/photography-card.jpg", w: 600, h: 900, position: "50% 35%", alt: "" },
+  "svc-video-and-film-card": { type: "video", src: "/media/video-and-film-card.mp4", poster: "/media/video-and-film-card-poster.jpg", w: 406, h: 720 },
+  "svc-post-production-card": { src: "/media/post-production-card.jpg", w: 600, h: 900, position: "50% 35%", alt: "" },
+  "svc-smart-tech-card": { src: "/media/smart-tech-card.jpg", w: 675, h: 900, position: "50% 30%", alt: "" },
+  "svc-creative-and-brand-card": { src: "/media/creative-and-brand-card.jpg", w: 900, h: 900, alt: "" },
+  "svc-strategy-and-consulting-card": { src: "/media/strategy-and-consulting-card.jpg", w: 601, h: 900, position: "50% 45%", alt: "" },
+  "svc-digital-marketing-card": { src: "/media/digital-marketing-card.jpg", w: 900, h: 580, alt: "" },
+  "svc-paid-media-and-performance-marketing-card": { src: "/media/paid-media-and-performance-marketing-card.jpg", w: 900, h: 601, alt: "" },
+  // Opened rows (folder "in")
+  "svc-photography-video": { type: "image", src: "/media/photography-inside.jpg", w: 1201, h: 1800, alt: "A young girl sits on a picnic blanket in front of a play tent, with a backpack and toys around her" },
+  "svc-video-and-film-video": { src: "/media/video-and-film-inside.mp4", poster: "/media/video-and-film-inside-poster.jpg", w: 776, h: 1080 },
+  "svc-post-production-video": { type: "image", src: "/media/post-production-inside.jpg", w: 1800, h: 1200, alt: "Two editors working at a desk with editing software on the monitors" },
+  "svc-smart-tech-video": { type: "image", src: "/media/smart-tech-inside.jpg", w: 1194, h: 1600, alt: "A woman in a denim jacket posing on a city street corner" },
+  "svc-creative-and-brand-video": { src: "/media/creative-and-brand-inside.mp4", poster: "/media/creative-and-brand-inside-poster.jpg", w: 480, h: 848 },
+  "svc-strategy-and-consulting-video": { type: "image", src: "/media/strategy-and-consulting-inside.jpg", w: 1800, h: 1200, alt: "A person reading a printed report beside an open laptop" },
+  "svc-digital-marketing-video": { type: "image", src: "/media/digital-marketing-inside.jpg", w: 1201, h: 1800, alt: "A desktop computer showing a digital marketing screen" },
+  "svc-paid-media-and-performance-marketing-video": { type: "image", src: "/media/paid-media-and-performance-marketing-inside.jpg", w: 1800, h: 1201, alt: "A presenter showing an ad-spend chart to a meeting" },
+  // About section (folder "VIDEO 2"): portrait film, shown 3:4 with the focus kept high
+  "home-about": { type: "video", src: "/media/home-about.mp4", poster: "/media/home-about-poster.jpg", w: 608, h: 1080, ratio: "3/4", position: "50% 30%" },
+};
+for (const [id, f] of Object.entries(FILES)) {
+  const inside = id.endsWith("-video");
+  media[id] = { ...media[id], ...f, ...(inside && { ratio: `${f.w}/${f.h}` }), status: "final" };
+}
+
+// Hero: the client's hero film is not ready yet (Raghav, 2026-11-24); the line-drawn "A" shows until then.
+// When it arrives: put hero.mp4 + hero-poster.jpg (and an optional 9:16 hero-mobile.mp4) in /public/media, then:
+// media["home-hero"] = { ...media["home-hero"], src: "/media/hero.mp4", poster: "/media/hero-poster.jpg", mobileSrc: "/media/hero-mobile.mp4", status: "final" };
+// Story band ("home-story"): no footage supplied for it yet, so it keeps its placeholder.
 
 export function getMedia(id) {
   const m = media[id];

@@ -6,3 +6,6 @@ out/
 .vercel
 *.log
 .DS_Store
+
+# client originals (large); optimised copies live in public/media
+/Monara_content/

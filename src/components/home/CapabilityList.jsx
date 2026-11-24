@@ -1,5 +1,6 @@
 import { listedCapabilities } from "@/lib/services";
 import Media from "@/components/media/Media";
+import { getMedia } from "@/content/media";
 import PreviewGuard from "./PreviewGuard";
 
 /**
@@ -34,13 +35,17 @@ function Toggle() {
 }
 
 function Body({ c }) {
+  const id = `svc-${c.slug}-video`;
+  const m = getMedia(id);
+  // portrait work keeps its own shape at a sensible width instead of being cropped
+  const portrait = m.h > m.w;
   return (
     <div className="grid gap-8 bg-teal/[0.06] px-4 pb-12 pt-8 lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:px-6 lg:pb-14 lg:pt-10">
       {/* Full client description (the closed row shows a 3-line excerpt) */}
       <p className="min-w-0 text-[17px] leading-relaxed text-ink/85 lg:col-span-5 lg:text-[19px]">{c.summary}</p>
-      {/* Capability video, plays muted on loop once the file is supplied */}
-      <div className="min-w-0 lg:col-span-6 lg:col-start-7">
-        <Media id={`svc-${c.slug}-video`} reveal={false} sizes="(min-width: 1024px) 45vw, 100vw" />
+      {/* Capability image or video (videos play muted on loop) */}
+      <div className={`min-w-0 lg:col-span-6 lg:col-start-7 ${portrait ? "w-full max-w-[400px] justify-self-center lg:max-w-[420px]" : ""}`}>
+        <Media id={id} reveal={false} sizes={portrait ? "420px" : "(min-width: 1024px) 45vw, 100vw"} />
       </div>
     </div>
   );

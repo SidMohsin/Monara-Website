@@ -16,6 +16,20 @@ export default function MotionController() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const reveal = Array.from(document.querySelectorAll("[data-reveal]:not(.is-visible)"));
 
+    // reduced motion: background loops stay on their still frame (poster)
+    if (reduce) document.querySelectorAll("video[autoplay]").forEach((v) => v.pause());
+
+    // Lazy loops (<Media> videos): load + play only while on screen, pause when off.
+    // A video inside a closed service row has no box, so it never loads until opened.
+    let vio;
+    if (!reduce && "IntersectionObserver" in window) {
+      vio = new IntersectionObserver(
+        (entries) => entries.forEach((e) => (e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause())),
+        { rootMargin: "200px 0px" },
+      );
+      document.querySelectorAll("video[data-autoplay]").forEach((v) => vio.observe(v));
+    }
+
     if (reduce || !("IntersectionObserver" in window)) {
       reveal.forEach((el) => el.classList.add("is-visible"));
       return;
@@ -58,6 +72,7 @@ export default function MotionController() {
 
     return () => {
       io.disconnect();
+      vio?.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       if (frame) cancelAnimationFrame(frame);

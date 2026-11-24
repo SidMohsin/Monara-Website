@@ -18,7 +18,11 @@ export default function HomeHero() {
       {/* Background */}
       {video.src ? (
         <>
-          <video className="absolute inset-0 h-full w-full object-cover" src={video.src} poster={video.poster || undefined} muted loop playsInline autoPlay preload="metadata" aria-hidden="true" />
+          {/* phones load the vertical cut; the browser picks one source, so only one file downloads */}
+          <video className="absolute inset-0 h-full w-full object-cover" poster={video.poster || undefined} muted loop playsInline autoPlay preload="auto" aria-hidden="true">
+            {video.mobileSrc && <source src={video.mobileSrc} media="(max-width: 767px) and (orientation: portrait)" type="video/mp4" />}
+            <source src={video.src} type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-black/55" aria-hidden="true" />
         </>
       ) : (
@@ -54,11 +58,12 @@ export default function HomeHero() {
       </div>
 
       {/* Content */}
-      <div className="container-x relative z-[3] flex flex-1 flex-col justify-end pb-[clamp(88px,11vh,128px)] pt-48 lg:pt-56">
+      {/* top space shrinks on short screens so the buttons always sit on the first screen */}
+      <div className="container-x relative z-[3] flex flex-1 flex-col justify-end pb-[clamp(88px,11vh,128px)] pt-[clamp(150px,24vh,192px)] lg:pt-[clamp(160px,24vh,224px)]">
         <div className="fade-in-late" style={{ animationDelay: "0.1s" }}>
           <Positioning className="text-teal-light" />
         </div>
-        <h1 id="hero-heading" className="display-caps mt-6 max-w-[15ch] text-display" style={{ fontSize: "min(var(--text-display), 12.5svh)" }}>
+        <h1 id="hero-heading" className="display-caps mt-6 max-w-[15ch] text-display" style={{ fontSize: "min(var(--text-display), 11.5svh)" }}>
           {words.map((w, i) => (
             <span key={i} className="hero-word mr-[0.22em]" style={{ "--i": i }}>
               {w}

@@ -17,11 +17,14 @@ export default function Media({ id, className = "", sizes = "100vw", priority = 
   const style = fill ? undefined : { aspectRatio: ratio };
   const wrap = `relative overflow-hidden bg-ink-soft ${fill ? "h-full w-full" : "w-full"} ${className}`;
   const revealAttr = reveal ? { "data-reveal": "wipe" } : {};
+  // focal point for object-cover crops (set per file in media.js)
+  const pos = m.position ? { objectPosition: m.position } : undefined;
 
   if (m.src && m.type === "video") {
     return (
       <div className={wrap} style={style} {...revealAttr}>
-        <video className="absolute inset-0 h-full w-full object-cover" src={m.src} poster={m.poster || undefined} muted loop playsInline autoPlay preload="metadata" aria-hidden="true" />
+        {/* lazy: nothing downloads until on screen; MotionController plays/pauses it (data-autoplay) */}
+        <video className="absolute inset-0 h-full w-full object-cover" style={pos} src={m.src} poster={m.poster || undefined} muted loop playsInline preload="none" data-autoplay aria-hidden="true" />
       </div>
     );
   }
@@ -29,7 +32,7 @@ export default function Media({ id, className = "", sizes = "100vw", priority = 
   if (m.src) {
     return (
       <div className={wrap} style={style} {...revealAttr}>
-        <Image src={m.src} alt={m.alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image src={m.src} alt={m.alt} fill sizes={sizes} priority={priority} className="object-cover" style={pos} />
       </div>
     );
   }
