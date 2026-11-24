@@ -42,8 +42,9 @@ export function About() {
             ))}
           </div>
         </div>
-        <div className="lg:col-span-5">
-          <Media id="home-about" sizes="(min-width: 1024px) 35vw, 100vw" />
+        {/* full portrait film, width capped so it fits on screen */}
+        <div className="mx-auto w-full max-w-[360px] lg:col-span-5 lg:mr-0 lg:max-w-[380px]">
+          <Media id="home-about" sizes="380px" />
         </div>
       </div>
     </section>

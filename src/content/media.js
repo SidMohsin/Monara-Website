@@ -102,8 +102,8 @@ const FILES = {
   "svc-strategy-and-consulting-video": { type: "image", src: "/media/strategy-and-consulting-inside.jpg", w: 1800, h: 1200, alt: "A person reading a printed report beside an open laptop" },
   "svc-digital-marketing-video": { type: "image", src: "/media/digital-marketing-inside.jpg", w: 1201, h: 1800, alt: "A desktop computer showing a digital marketing screen" },
   "svc-paid-media-and-performance-marketing-video": { type: "image", src: "/media/paid-media-and-performance-marketing-inside.jpg", w: 1800, h: 1201, alt: "A presenter showing an ad-spend chart to a meeting" },
-  // About section (folder "VIDEO 2"): portrait film, shown 3:4 with the focus kept high
-  "home-about": { type: "video", src: "/media/home-about.mp4", poster: "/media/home-about-poster.jpg", w: 608, h: 1080, ratio: "3/4", position: "50% 30%" },
+  // About section (folder "VIDEO 2"): portrait film, shown at its full 9:16 shape (not cropped)
+  "home-about": { type: "video", src: "/media/home-about.mp4", poster: "/media/home-about-poster.jpg", w: 608, h: 1080, ratio: "608/1080" },
 };
 for (const [id, f] of Object.entries(FILES)) {
   const inside = id.endsWith("-video");
