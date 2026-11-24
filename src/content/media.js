@@ -80,6 +80,8 @@ export const media = Object.fromEntries(
 );
 
 // ── Real files (client folder Monara_content/HOMEPAGE, optimised into /public/media) ──
+// Digital Marketing, Strategy & Consulting, Post-Production and Paid Media use the images
+// Shristi supplied on 2026-11-24 (HOMEPAGE/new images) for the opened row; hover previews stay as before.
 // `w`/`h`: the file's own size. Opened-row ("inside") slots take the file's own shape so
 // portrait work is never cropped; hover previews fill their cell (`position` = focal point).
 // Videos are muted loops (aria-hidden), so they need no alt text.
@@ -96,12 +98,12 @@ const FILES = {
   // Opened rows (folder "in")
   "svc-photography-video": { type: "image", src: "/media/photography-inside.jpg", w: 1201, h: 1800, alt: "A young girl sits on a picnic blanket in front of a play tent, with a backpack and toys around her" },
   "svc-video-and-film-video": { src: "/media/video-and-film-inside.mp4", poster: "/media/video-and-film-inside-poster.jpg", w: 776, h: 1080 },
-  "svc-post-production-video": { type: "image", src: "/media/post-production-inside.jpg", w: 1800, h: 1200, alt: "Two editors working at a desk with editing software on the monitors" },
+  "svc-post-production-video": { type: "image", src: "/media/post-production-v2-inside.jpg", w: 1800, h: 1013, alt: "Two editors reviewing footage and colour grading on studio monitors" },
   "svc-smart-tech-video": { type: "image", src: "/media/smart-tech-inside.jpg", w: 1194, h: 1600, alt: "A woman in a denim jacket posing on a city street corner" },
   "svc-creative-and-brand-video": { src: "/media/creative-and-brand-inside.mp4", poster: "/media/creative-and-brand-inside-poster.jpg", w: 480, h: 848 },
-  "svc-strategy-and-consulting-video": { type: "image", src: "/media/strategy-and-consulting-inside.jpg", w: 1800, h: 1200, alt: "A person reading a printed report beside an open laptop" },
-  "svc-digital-marketing-video": { type: "image", src: "/media/digital-marketing-inside.jpg", w: 1201, h: 1800, alt: "A desktop computer showing a digital marketing screen" },
-  "svc-paid-media-and-performance-marketing-video": { type: "image", src: "/media/paid-media-and-performance-marketing-inside.jpg", w: 1800, h: 1201, alt: "A presenter showing an ad-spend chart to a meeting" },
+  "svc-strategy-and-consulting-video": { type: "image", src: "/media/strategy-and-consulting-v2-inside.jpg", w: 1800, h: 1013, alt: "Two colleagues planning a project with sticky notes beside a project timeline board" },
+  "svc-digital-marketing-video": { type: "image", src: "/media/digital-marketing-v2-inside.jpg", w: 1800, h: 818, alt: "A hand touching a Digital Marketing screen surrounded by marketing icons" },
+  "svc-paid-media-and-performance-marketing-video": { type: "image", src: "/media/paid-media-and-performance-marketing-v2-inside.jpg", w: 1800, h: 1012, alt: "Illustration of a marketer at a laptop with ad performance charts and social media icons" },
   // About section (folder "VIDEO 2"): portrait film, shown at its full 9:16 shape (not cropped)
   "home-about": { type: "video", src: "/media/home-about.mp4", poster: "/media/home-about-poster.jpg", w: 608, h: 1080, ratio: "608/1080" },
 };
