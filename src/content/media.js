@@ -112,9 +112,10 @@ for (const [id, f] of Object.entries(FILES)) {
   media[id] = { ...media[id], ...f, ...(inside && { ratio: `${f.w}/${f.h}` }), status: "final" };
 }
 
-// Hero: the client's hero film is not ready yet (Raghav, 2026-11-24); the line-drawn "A" shows until then.
-// When it arrives: put hero.mp4 + hero-poster.jpg (and an optional 9:16 hero-mobile.mp4) in /public/media, then:
-// media["home-hero"] = { ...media["home-hero"], src: "/media/hero.mp4", poster: "/media/hero-poster.jpg", mobileSrc: "/media/hero-mobile.mp4", status: "final" };
+// Hero: client showreel (HOMEPAGE/HERO_section, 2026-11-25). Only a 16:9 version exists for now, so
+// phones get a 9:16 cut of it framed shot by shot (split screens show their middle panel; the closing
+// logo card is fitted, not cropped). Replace hero-mobile.mp4 when a proper vertical edit arrives.
+media["home-hero"] = { ...media["home-hero"], src: "/media/hero.mp4", poster: "/media/hero-poster.jpg", mobileSrc: "/media/hero-mobile.mp4", status: "final" };
 // Story band ("home-story"): no footage supplied for it yet, so it keeps its placeholder.
 
 export function getMedia(id) {

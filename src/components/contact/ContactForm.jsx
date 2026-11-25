@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
 import { Arrow } from "@/components/ui/Links";
 
 // Set NEXT_PUBLIC_FORM_ENDPOINT (e.g. a free Formspree / Web3Forms URL) to connect the form.
@@ -18,7 +17,7 @@ function validate(v) {
   else if (!EMAIL_RE.test(v.email.trim())) e.email = "Please enter a valid email address, e.g. name@company.com.";
   if (v.phone.trim() && !PHONE_RE.test(v.phone.trim())) e.phone = "Please enter a valid phone number, or leave this empty.";
   if (!v.message.trim() || v.message.trim().length < 10) e.message = "Please tell us a little about your project (at least 10 characters).";
-  if (!v.consent) e.consent = "Please confirm you have read the privacy notice.";
+  if (!v.consent) e.consent = "Please tick this box so we can reply to your enquiry.";
   return e;
 }
 
@@ -151,11 +150,7 @@ export default function ContactForm({ capabilities, fallbackEmail }) {
         <label className="flex cursor-pointer items-start gap-3 text-[15px]">
           <input type="checkbox" name="consent" checked={values.consent} onChange={set("consent")} onBlur={blur("consent")} aria-invalid={!!err("consent")} aria-describedby={describedBy("consent")} className="mt-1 h-4 w-4 shrink-0 accent-teal" />
           <span>
-            I agree that MONARA Productions may use these details to reply to my enquiry. See the{" "}
-            <Link href="/privacy-policy" className="text-teal underline underline-offset-4">
-              privacy policy
-            </Link>
-            .
+            I agree that MONARA Productions may use these details to reply to my enquiry.
           </span>
         </label>
         {err("consent") && <p id="consent-error" className="mt-2 text-sm text-red-700">{errors.consent}</p>}

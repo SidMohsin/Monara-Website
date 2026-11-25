@@ -15,6 +15,7 @@ function Placeholder({ children }) {
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const social = site.social.filter((s) => s.href); // only profiles with a real link
   return (
     <footer className="bg-ink text-white">
       <div className="container-x pb-10 pt-[clamp(64px,9vw,120px)]">
@@ -43,7 +44,7 @@ export default function Footer() {
           <nav aria-label="Company" className="lg:col-span-2">
             <h2 className="eyebrow text-muted-dark">Company</h2>
             <ul className="mt-6 space-y-2.5 text-[15px]">
-              {[{ label: "Home", href: "/#main" }, ...site.nav, { label: site.cta.label, href: site.cta.href }, { label: "Privacy Policy", href: "/privacy-policy" }].map((n) => (
+              {[{ label: "Home", href: "/#main" }, ...site.nav, { label: site.cta.label, href: site.cta.href }].map((n) => (
                 <li key={n.href}>
                   <SectionLink href={n.href} className="link-underline text-white/80 hover:text-white">
                     {n.label}
@@ -71,19 +72,17 @@ export default function Footer() {
                 ))}
               </p>
             </address>
-            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[13px] uppercase tracking-[0.14em]">
-              {site.social.map((s) => (
-                <li key={s.label}>
-                  {s.href ? (
+            {social.length > 0 && (
+              <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[13px] uppercase tracking-[0.14em]">
+                {social.map((s) => (
+                  <li key={s.label}>
                     <a href={s.href} target="_blank" rel="noopener noreferrer" className="link-underline text-white/80 hover:text-white">
                       {s.label}
                     </a>
-                  ) : (
-                    <Placeholder>{s.label}</Placeholder>
-                  )}
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 
@@ -91,9 +90,7 @@ export default function Footer() {
           <p>
             © {year} {site.name}. {site.country}.
           </p>
-          <Link href="/privacy-policy" className="link-underline hover:text-white">
-            Privacy Policy
-          </Link>
+          {/* Privacy Policy link returns with the page (parked in src/app/_later until the client supplies the text) */}
         </div>
       </div>
     </footer>

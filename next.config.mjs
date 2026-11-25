@@ -15,6 +15,8 @@ const nextConfig = {
       { source: "/contact", destination: "/#contact", permanent: false },
       { source: "/work", destination: "/", permanent: false },
       { source: "/work/:slug", destination: "/", permanent: false },
+      // Privacy Policy page parked until the client supplies the text (Nov 2026)
+      { source: "/privacy-policy", destination: "/", permanent: false },
     ];
   },
 };

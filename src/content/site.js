@@ -30,7 +30,8 @@ export const site = {
     mapUrl: null, // PLACEHOLDER: Google Maps link
   },
 
-  // PLACEHOLDER: real profile URLs. `href: null` renders as a non-clickable placeholder.
+  // Real profile URLs. Profiles with `href: null` are not shown anywhere on the site;
+  // fill in a URL and that profile appears in the footer and contact section automatically.
   social: [
     { label: "Instagram", href: null },
     { label: "Facebook", href: null },

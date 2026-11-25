@@ -139,6 +139,7 @@ function Row({ label, children }) {
 /** Contact: Sheet3 closing words, then the enquiry form and contact details. Target of every "Start Your Project" button. */
 export function Contact() {
   const c = site.contact;
+  const social = site.social.filter((s) => s.href); // only profiles with a real link
   return (
     <section id="contact" aria-labelledby="contact-heading">
       <div className="grain relative overflow-hidden bg-teal text-white">
@@ -183,13 +184,19 @@ export function Contact() {
                   </span>
                 ))}
               </Row>
-              <Row label="Follow">
-                <ul className="flex flex-wrap gap-x-5 gap-y-2">
-                  {site.social.map((s) => (
-                    <li key={s.label}>{s.href ? <a href={s.href} target="_blank" rel="noopener noreferrer" className="link-underline">{s.label}</a> : <Ph>{s.label}</Ph>}</li>
-                  ))}
-                </ul>
-              </Row>
+              {social.length > 0 && (
+                <Row label="Follow">
+                  <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                    {social.map((s) => (
+                      <li key={s.label}>
+                        <a href={s.href} target="_blank" rel="noopener noreferrer" className="link-underline">
+                          {s.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </Row>
+              )}
             </dl>
           </aside>
         </div>
