@@ -112,11 +112,13 @@ for (const [id, f] of Object.entries(FILES)) {
   media[id] = { ...media[id], ...f, ...(inside && { ratio: `${f.w}/${f.h}` }), status: "final" };
 }
 
-// Hero: client showreel (HOMEPAGE/HERO_section, 2026-11-25). Only a 16:9 version exists for now, so
-// phones get a 9:16 cut of it framed shot by shot (split screens show their middle panel; the closing
-// logo card is fitted, not cropped). Replace hero-mobile.mp4 when a proper vertical edit arrives.
+// Hero: client showreel (HOMEPAGE/HERO_section). Desktop = "MONARA SHOWREEL (F)" 16:9;
+// phones = "MONARA SHOWREEL (9X16)", the client's own vertical edit (2026-11-26).
 media["home-hero"] = { ...media["home-hero"], src: "/media/hero.mp4", poster: "/media/hero-poster.jpg", mobileSrc: "/media/hero-mobile.mp4", status: "final" };
-// Story band ("home-story"): no footage supplied for it yet, so it keeps its placeholder.
+// Story band: client "behind the scene" collages (HOMEPAGE/behind the scene, 2026-11-26), supplied
+// pre-darkened. Desktop/tablet 4:3 (w1), phones a tall version (w2). Decorative background: no alt.
+media["home-story"] = { ...media["home-story"], type: "image", src: "/media/story-desktop.jpg", w: 2000, h: 1500, alt: "", status: "final" };
+media["home-story-mobile"] = { ...media["home-story"], id: "home-story-mobile", src: "/media/story-mobile.jpg", w: 1080, h: 2340, ratio: "1080/2340" };
 
 export function getMedia(id) {
   const m = media[id];

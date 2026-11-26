@@ -9,6 +9,7 @@ import SectionHeader from "@/components/sections/SectionHeader";
 import WorkCard from "@/components/work/WorkCard";
 import ContactForm from "@/components/contact/ContactForm";
 import Draft from "@/components/ui/Draft";
+import { Arrow } from "@/components/ui/Links";
 import CapabilityList from "./CapabilityList";
 import Positioning from "@/components/brand/Positioning";
 
@@ -88,14 +89,22 @@ export function FeaturedWork() {
 }
 
 export function StoryBand() {
+  const real = getMedia("home-story").status === "final";
   return (
     <section aria-labelledby="story-heading" className="relative overflow-hidden bg-ink text-white">
-      <div className="absolute inset-0 opacity-60" aria-hidden="true">
-        <div className="absolute inset-[-12%_0]" data-parallax="0.08">
-          <Media id="home-story" fill label={false} reveal={false} />
+      {/* real artwork arrives already darkened, so it is dimmed less than the placeholder */}
+      <div className={`absolute inset-0 ${real ? "" : "opacity-60"}`} aria-hidden="true">
+        {/* desktop/tablet: 4:3 image; phones: their own tall image (only one is downloaded) */}
+        <div className={`absolute inset-[-12%_0] ${real ? "hidden md:block" : ""}`} data-parallax="0.08">
+          <Media id="home-story" fill label={false} reveal={false} sizes="100vw" />
         </div>
+        {real && (
+          <div className="absolute inset-[-12%_0] md:hidden" data-parallax="0.08">
+            <Media id="home-story-mobile" fill label={false} reveal={false} sizes="100vw" />
+          </div>
+        )}
       </div>
-      <div className="absolute inset-0 bg-linear-to-b from-ink via-ink/40 to-ink" aria-hidden="true" />
+      <div className={`absolute inset-0 bg-linear-to-b ${real ? "from-ink/80 via-ink/10 to-ink/85" : "from-ink via-ink/40 to-ink"}`} aria-hidden="true" />
       <div className="container-x relative z-[3] py-[clamp(112px,16vw,240px)]">
         <div data-reveal>
           <Positioning className="text-teal-light" />
@@ -118,15 +127,6 @@ export function StoryBand() {
   );
 }
 
-// PLACEHOLDER contact values come from src/content/site.js; links stay disabled until real details are set.
-function Ph({ children }) {
-  return (
-    <span className="text-ink/70" title="Placeholder: to be supplied by the client">
-      {children}
-    </span>
-  );
-}
-
 function Row({ label, children }) {
   return (
     <div className="border-t border-line py-5">
@@ -135,6 +135,9 @@ function Row({ label, children }) {
     </div>
   );
 }
+
+// The enquiry form shows once a form service URL is set in the hosting settings; until then, an email button.
+const FORM_CONNECTED = Boolean(process.env.NEXT_PUBLIC_FORM_ENDPOINT);
 
 /** Contact: Sheet3 closing words, then the enquiry form and contact details. Target of every "Start Your Project" button. */
 export function Contact() {
@@ -165,7 +168,15 @@ export function Contact() {
               <Draft on={contactPage.intro.draft}>{contactPage.intro.text}</Draft>
             </p>
             <div className="mt-10">
-              <ContactForm capabilities={capabilities.map(({ slug, title }) => ({ slug, title }))} fallbackEmail={c.email} />
+              {FORM_CONNECTED ? (
+                <ContactForm capabilities={capabilities.map(({ slug, title }) => ({ slug, title }))} fallbackEmail={c.email} />
+              ) : (
+                // Until a form service is connected (NEXT_PUBLIC_FORM_ENDPOINT), enquiries go by email
+                <a href={`mailto:${c.email}`} className="group inline-flex items-center gap-3 bg-teal px-7 py-4 text-sm font-medium uppercase tracking-[0.16em] text-white transition-colors hover:bg-teal-deep">
+                  Email {c.email}
+                  <Arrow />
+                </a>
+              )}
             </div>
           </div>
 
@@ -174,16 +185,26 @@ export function Contact() {
               Contact details
             </h3>
             <dl className="mt-6 border-b border-line" data-reveal style={{ "--reveal-i": 1 }}>
-              <Row label="Email">{c.email && !c.email.includes("yourdomain") ? <a href={`mailto:${c.email}`} className="link-underline">{c.email}</a> : <Ph>{c.email}</Ph>}</Row>
-              <Row label="Phone">{c.phoneHref ? <a href={c.phoneHref} className="link-underline">{c.phone}</a> : <Ph>{c.phone}</Ph>}</Row>
-              <Row label="WhatsApp">{c.whatsappHref ? <a href={c.whatsappHref} target="_blank" rel="noopener noreferrer" className="link-underline">{c.whatsapp}</a> : <Ph>{c.whatsapp}</Ph>}</Row>
-              <Row label="Studio">
-                {c.address.map((l) => (
-                  <span key={l} className="block">
-                    <Ph>{l}</Ph>
-                  </span>
-                ))}
-              </Row>
+              {c.email && (
+                <Row label="Email">
+                  <a href={`mailto:${c.email}`} className="link-underline">{c.email}</a>
+                </Row>
+              )}
+              {c.phone && <Row label="Phone">{c.phoneHref ? <a href={c.phoneHref} className="link-underline">{c.phone}</a> : c.phone}</Row>}
+              {c.whatsapp && (
+                <Row label="WhatsApp">
+                  {c.whatsappHref ? <a href={c.whatsappHref} target="_blank" rel="noopener noreferrer" className="link-underline">{c.whatsapp}</a> : c.whatsapp}
+                </Row>
+              )}
+              {c.address.length > 0 && (
+                <Row label="Studio">
+                  {c.address.map((l) => (
+                    <span key={l} className="block">
+                      {l}
+                    </span>
+                  ))}
+                </Row>
+              )}
               {social.length > 0 && (
                 <Row label="Follow">
                   <ul className="flex flex-wrap gap-x-5 gap-y-2">

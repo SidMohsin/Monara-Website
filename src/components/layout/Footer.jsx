@@ -5,14 +5,6 @@ import { site } from "@/content/site";
 import { capabilities } from "@/lib/services";
 import Positioning from "@/components/brand/Positioning";
 
-function Placeholder({ children }) {
-  return (
-    <span className="text-white/60" title="Placeholder: to be supplied by the client">
-      {children}
-    </span>
-  );
-}
-
 export default function Footer() {
   const year = new Date().getFullYear();
   const social = site.social.filter((s) => s.href); // only profiles with a real link
@@ -56,21 +48,27 @@ export default function Footer() {
 
           <div className="lg:col-span-3">
             <h2 className="eyebrow text-muted-dark">Contact</h2>
-            {/* PLACEHOLDER contact details: see src/content/site.js */}
+            {/* only details that are filled in (src/content/site.js) are shown */}
             <address className="mt-6 space-y-2.5 text-[15px] not-italic">
-              <p>
-                <Placeholder>{site.contact.email}</Placeholder>
-              </p>
-              <p>
-                <Placeholder>{site.contact.phone}</Placeholder>
-              </p>
-              <p>
-                {site.contact.address.map((l) => (
-                  <span key={l} className="block">
-                    <Placeholder>{l}</Placeholder>
-                  </span>
-                ))}
-              </p>
+              {site.contact.email && (
+                <p>
+                  <a href={`mailto:${site.contact.email}`} className="link-underline text-white/80 hover:text-white">
+                    {site.contact.email}
+                  </a>
+                </p>
+              )}
+              {site.contact.phone && (
+                <p>{site.contact.phoneHref ? <a href={site.contact.phoneHref} className="link-underline text-white/80 hover:text-white">{site.contact.phone}</a> : site.contact.phone}</p>
+              )}
+              {site.contact.address.length > 0 && (
+                <p className="text-white/80">
+                  {site.contact.address.map((l) => (
+                    <span key={l} className="block">
+                      {l}
+                    </span>
+                  ))}
+                </p>
+              )}
             </address>
             {social.length > 0 && (
               <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[13px] uppercase tracking-[0.14em]">

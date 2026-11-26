@@ -20,14 +20,15 @@ export const site = {
   description:
     "MONARA Productions, Sri Lanka: creativity, production and Smart Tech. Photography, video and film, post-production, Smart Tech, creative, strategy and digital marketing.",
 
+  // Only details that are filled in are shown on the site; empty ones are hidden everywhere.
   contact: {
-    email: "hello@yourdomain.lk", // PLACEHOLDER
-    phone: "+94 00 000 0000", // PLACEHOLDER
-    phoneHref: null, // PLACEHOLDER: set to "tel:+94…" when the real number is supplied
-    whatsapp: "+94 00 000 0000", // PLACEHOLDER
-    whatsappHref: null, // PLACEHOLDER: set to "https://wa.me/94…" when the real number is supplied
-    address: ["Studio address line 1", "City, Sri Lanka"], // PLACEHOLDER (city/country to confirm)
-    mapUrl: null, // PLACEHOLDER: Google Maps link
+    email: "hey@monaraproductions.com", // supplied by Shristi, 2026-11-26
+    phone: null, // add when supplied, e.g. "+94 77 123 4567"
+    phoneHref: null, // e.g. "tel:+94771234567"
+    whatsapp: null, // e.g. "+94 77 123 4567"
+    whatsappHref: null, // e.g. "https://wa.me/94771234567"
+    address: [], // e.g. ["Street", "City, Sri Lanka"]
+    mapUrl: null, // Google Maps link
   },
 
   // Real profile URLs. Profiles with `href: null` are not shown anywhere on the site;
