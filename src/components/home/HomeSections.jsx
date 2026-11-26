@@ -9,7 +9,6 @@ import SectionHeader from "@/components/sections/SectionHeader";
 import WorkCard from "@/components/work/WorkCard";
 import ContactForm from "@/components/contact/ContactForm";
 import Draft from "@/components/ui/Draft";
-import { Arrow } from "@/components/ui/Links";
 import CapabilityList from "./CapabilityList";
 import Positioning from "@/components/brand/Positioning";
 
@@ -136,9 +135,6 @@ function Row({ label, children }) {
   );
 }
 
-// The enquiry form shows once a form service URL is set in the hosting settings; until then, an email button.
-const FORM_CONNECTED = Boolean(process.env.NEXT_PUBLIC_FORM_ENDPOINT);
-
 /** Contact: Sheet3 closing words, then the enquiry form and contact details. Target of every "Start Your Project" button. */
 export function Contact() {
   const c = site.contact;
@@ -168,15 +164,7 @@ export function Contact() {
               <Draft on={contactPage.intro.draft}>{contactPage.intro.text}</Draft>
             </p>
             <div className="mt-10">
-              {FORM_CONNECTED ? (
-                <ContactForm capabilities={capabilities.map(({ slug, title }) => ({ slug, title }))} fallbackEmail={c.email} />
-              ) : (
-                // Until a form service is connected (NEXT_PUBLIC_FORM_ENDPOINT), enquiries go by email
-                <a href={`mailto:${c.email}`} className="group inline-flex items-center gap-3 bg-teal px-7 py-4 text-sm font-medium uppercase tracking-[0.16em] text-white transition-colors hover:bg-teal-deep">
-                  Email {c.email}
-                  <Arrow />
-                </a>
-              )}
+              <ContactForm capabilities={capabilities.map(({ slug, title }) => ({ slug, title }))} fallbackEmail={c.email} />
             </div>
           </div>
 
