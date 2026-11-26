@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { home } from "@/content/copy";
 import { site } from "@/content/site";
 import { getMedia } from "@/content/media";
@@ -64,10 +65,14 @@ export default function HomeHero() {
           <Positioning className="text-teal-light" />
         </div>
         <h1 id="hero-heading" className="display-caps mt-6 max-w-[15ch] text-display" style={{ fontSize: "min(var(--text-display), 11.5svh)" }}>
+          {/* real spaces between the animated words, so search engines read the heading as words */}
           {words.map((w, i) => (
-            <span key={i} className="hero-word mr-[0.22em]" style={{ "--i": i }}>
-              {w}
-            </span>
+            <Fragment key={i}>
+              <span className="hero-word" style={{ "--i": i }}>
+                {w}
+              </span>
+              {i < words.length - 1 && " "}
+            </Fragment>
           ))}
         </h1>
         <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">

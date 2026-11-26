@@ -38,7 +38,7 @@ See `.env.example`.
 
 | Variable | Effect |
 |---|---|
-| `NEXT_PUBLIC_SITE_URL` | The real domain. While it is empty, the site is `noindex`, `robots.txt` blocks crawlers, and there are no canonical URLs or sitemap entries. |
+| `NEXT_PUBLIC_SITE_URL` | Optional override for the canonical domain. Not needed on Vercel: production builds use `site.url` (`https://monaraproductions.com`, in `src/content/site.js`) and are indexable; preview and local builds stay `noindex`, block crawlers in `robots.txt`, and have no canonical URLs or sitemap entries. |
 | `NEXT_PUBLIC_FORM_ENDPOINT` | Optional override for the contact form's endpoint (the Formspree URL is set in `src/content/site.js`). |
 | `NEXT_PUBLIC_SHOW_DRAFTS` | Set to `true` to show "Draft" badges on text awaiting approval. |
 

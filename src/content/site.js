@@ -10,6 +10,9 @@
 export const site = {
   name: "MONARA Productions",
   shortName: "Monara",
+  // Canonical address of the live site (no trailing slash). The hosting must redirect
+  // www.monaraproductions.com → monaraproductions.com so this is the one address search engines see.
+  url: "https://monaraproductions.com",
   country: "Sri Lanka",
 
   // Brand lines supplied by the client

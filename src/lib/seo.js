@@ -1,7 +1,10 @@
 import { site } from "@/content/site";
 
-// The site is only indexable once a real domain is configured.
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || null;
+// Canonical domain. Production builds (Vercel "production" environment) are indexable on
+// site.url automatically; preview and local builds stay noindex. NEXT_PUBLIC_SITE_URL, if set,
+// overrides it (for example to force indexing elsewhere).
+const IS_PRODUCTION = process.env.VERCEL_ENV === "production";
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || (IS_PRODUCTION ? site.url : "") || "").replace(/\/$/, "") || null;
 export const INDEXABLE = Boolean(SITE_URL);
 
 /** Builds page metadata. `noindex` forces noindex (e.g. placeholder projects). */
