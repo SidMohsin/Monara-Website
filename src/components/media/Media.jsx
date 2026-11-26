@@ -11,11 +11,13 @@ import FrameMarks from "./FrameMarks";
  *
  * `fill`: the parent sets the size; otherwise the slot's aspect ratio is used.
  */
-export default function Media({ id, className = "", sizes = "100vw", priority = false, fill = false, label = true, ratio: ratioOverride, reveal = true }) {
+export default function Media({ id, className = "", sizes = "100vw", priority = false, fill = false, label = true, ratio: ratioOverride, reveal = true, tone = "dark" }) {
   const m = getMedia(id);
   const ratio = ratioOverride || m.ratio;
   const style = fill ? undefined : { aspectRatio: ratio };
-  const wrap = `relative overflow-hidden bg-ink-soft ${fill ? "h-full w-full" : "w-full"} ${className}`;
+  // background shown while a real file loads: dark by default, light on light sections (no black flash)
+  const bg = m.src && tone === "light" ? "bg-mist" : "bg-ink-soft";
+  const wrap = `relative overflow-hidden ${bg} ${fill ? "h-full w-full" : "w-full"} ${className}`;
   const revealAttr = reveal ? { "data-reveal": "wipe" } : {};
   // focal point for object-cover crops (set per file in media.js)
   const pos = m.position ? { objectPosition: m.position } : undefined;

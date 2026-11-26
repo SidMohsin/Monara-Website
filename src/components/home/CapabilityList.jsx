@@ -2,6 +2,7 @@ import { listedCapabilities } from "@/lib/services";
 import Media from "@/components/media/Media";
 import { getMedia } from "@/content/media";
 import PreviewGuard from "./PreviewGuard";
+import WarmRows from "./WarmRows";
 
 /**
  * One-page site: the eight Sheet3 capabilities under the 360° Campaigns heading, as an accordion.
@@ -68,7 +69,7 @@ function Body({ c }) {
       <p className="min-w-0 text-[17px] leading-relaxed text-ink/85 lg:col-span-5 lg:text-[19px]">{c.summary}</p>
       {/* Capability image or video (videos play muted on loop) */}
       <div className={`min-w-0 lg:col-span-6 lg:col-start-7 ${portrait ? "w-full max-w-[400px] justify-self-center lg:max-w-[420px]" : ""}`}>
-        <Media id={id} reveal={false} sizes={portrait ? "420px" : "(min-width: 1024px) 45vw, 100vw"} />
+        <Media id={id} reveal={false} tone="light" sizes={portrait ? "420px" : "(min-width: 1024px) 45vw, 100vw"} />
       </div>
     </div>
   );
@@ -76,6 +77,8 @@ function Body({ c }) {
 
 export default function CapabilityList() {
   return (
+    <>
+    <WarmRows />
     <PreviewGuard as="ul" className="border-b border-line">
       {listedCapabilities.map((c, i) => (
         <li key={c.slug} data-reveal style={{ "--reveal-i": i % 4 }}>
@@ -101,5 +104,6 @@ export default function CapabilityList() {
         </li>
       ))}
     </PreviewGuard>
+    </>
   );
 }
