@@ -22,7 +22,7 @@ export const home = {
     "From traditional production to Smart Tech-led solutions, we create without boundaries.",
   ],
   capabilitiesHeading: "Our Capabilities", // S3 (used on the parked services page)
-  servicesHeading: "360° Campaigns", // one-page services section heading (Raghav, 2026-11-20)
+  servicesHeading: "360° Campaigns", // one-page services section heading (client feedback, 2026-11-20)
   workHeading: { text: "Featured Work", draft: true },
   // The three pillars use phrases taken from the S3 sub heading
   pillars: [

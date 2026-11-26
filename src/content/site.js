@@ -26,7 +26,7 @@ export const site = {
 
   // Only details that are filled in are shown on the site; empty ones are hidden everywhere.
   contact: {
-    email: "hey@monaraproductions.com", // supplied by Shristi, 2026-11-26
+    email: "hey@monaraproductions.com", // supplied by the client, 2026-11-26
     phone: null, // add when supplied, e.g. "+94 77 123 4567"
     phoneHref: null, // e.g. "tel:+94771234567"
     whatsapp: null, // e.g. "+94 77 123 4567"

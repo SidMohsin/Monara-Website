@@ -9,3 +9,6 @@ out/
 
 # client originals (large); optimised copies live in public/media
 /Monara_content/
+
+# internal notes, client files and review screenshots (kept locally, not published)
+/Docs/

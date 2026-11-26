@@ -39,10 +39,12 @@ See `.env.example`.
 | Variable | Effect |
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | The real domain. While it is empty, the site is `noindex`, `robots.txt` blocks crawlers, and there are no canonical URLs or sitemap entries. |
-| `NEXT_PUBLIC_FORM_ENDPOINT` | The contact form's endpoint. While it is empty, the form validates input but says it is not connected. |
+| `NEXT_PUBLIC_FORM_ENDPOINT` | Optional override for the contact form's endpoint (the Formspree URL is set in `src/content/site.js`). |
 | `NEXT_PUBLIC_SHOW_DRAFTS` | Set to `true` to show "Draft" badges on text awaiting approval. |
 
 ## Project docs
+
+The `Docs/` folder (client workbook, internal notes, review screenshots) is kept locally and is not published in this repository.
 
 - `Docs/design-plan.md`: approved design direction and sitemap
 - `Docs/client-checklist.md`: what we have, what is drafted, and what is still needed from the client

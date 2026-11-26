@@ -29,11 +29,11 @@ export function About() {
       <SectionHeader index="01" eyebrow="About" title={<Draft on={a.draft}>{a.heading}</Draft>} id="about-heading" />
       <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-20">
         <div className="lg:col-span-7">
-          {/* Raghav: stronger weight for the lead, "Monara" in bold, slightly smaller size */}
+          {/* Client feedback: stronger weight for the lead, "Monara" in bold, slightly smaller size */}
           <p className="text-[clamp(1.375rem,1rem+0.9vw,1.875rem)] font-normal leading-[1.35]" data-reveal>
             {boldMonara(first)}
           </p>
-          {/* Raghav: centre line between the two columns */}
+          {/* Client feedback: centre line between the two columns */}
           <div className="mt-12 grid gap-8 text-muted md:grid-cols-2 md:gap-0 md:divide-x md:divide-line">
             {rest.map((p, i) => (
               <p key={i} className="md:px-10 md:first:pl-0 md:last:pr-0" data-reveal style={{ "--reveal-i": i + 1 }}>

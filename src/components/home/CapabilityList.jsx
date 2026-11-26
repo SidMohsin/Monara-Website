@@ -11,7 +11,7 @@ import PreviewGuard from "./PreviewGuard";
  * `/#<slug>` links open the matching row (see HashOpener).
  *
  * Row grid (lg): title 5 · preview 2 · description 4 · toggle 1.
- * Hover and open: solid teal with white text (Raghav's choice; hover rules in globals.css).
+ * Hover and open: solid teal with white text (client's choice; hover rules in globals.css).
  * The hover preview lives in its own cell, so it never covers text
  * (PreviewGuard hides it on scroll/click/blur; CSS disables it on touch/reduced motion).
  */

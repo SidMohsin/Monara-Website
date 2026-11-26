@@ -81,7 +81,7 @@ export const media = Object.fromEntries(
 
 // ── Real files (client folder Monara_content/HOMEPAGE, optimised into /public/media) ──
 // Digital Marketing, Strategy & Consulting, Post-Production and Paid Media use the images
-// Shristi supplied on 2026-11-24 (HOMEPAGE/new images) for the opened row; hover previews stay as before.
+// the client supplied on 2026-11-24 (HOMEPAGE/new images) for the opened row; hover previews stay as before.
 // `w`/`h`: the file's own size. Opened-row ("inside") slots take the file's own shape so
 // portrait work is never cropped; hover previews fill their cell (`position` = focal point).
 // Videos are muted loops (aria-hidden), so they need no alt text.
