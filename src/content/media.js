@@ -105,7 +105,7 @@ const FILES = {
   "svc-digital-marketing-video": { type: "image", src: "/media/digital-marketing-v2-inside.jpg", w: 1800, h: 818, alt: "A hand touching a Digital Marketing screen surrounded by marketing icons" },
   "svc-paid-media-and-performance-marketing-video": { type: "image", src: "/media/paid-media-and-performance-marketing-v2-inside.jpg", w: 1800, h: 1012, alt: "Illustration of a marketer at a laptop with ad performance charts and social media icons" },
   // About section (folder "VIDEO 2"): portrait film, shown at its full 9:16 shape (not cropped)
-  "home-about": { type: "video", src: "/media/home-about.mp4", poster: "/media/home-about-poster.jpg", w: 608, h: 1080, ratio: "608/1080" },
+  "home-about": { type: "video", src: "/media/home-about-v2.mp4", poster: "/media/home-about-v2-poster.jpg", w: 608, h: 1080, ratio: "608/1080" }, // HOMEPAGE/new_change.MP4 (2026-11-26)
 };
 for (const [id, f] of Object.entries(FILES)) {
   const inside = id.endsWith("-video");
