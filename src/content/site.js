@@ -20,6 +20,10 @@ export const site = {
   description:
     "MONARA Productions, Sri Lanka: creativity, production and Smart Tech. Photography, video and film, post-production, Smart Tech, creative, strategy and digital marketing.",
 
+  // Contact form: Formspree form "Monara Website Enquiry" (account on hey@monaraproductions.com).
+  // Submissions arrive by email and in the Formspree dashboard.
+  formEndpoint: "https://formspree.io/f/mppdbnbv",
+
   // Only details that are filled in are shown on the site; empty ones are hidden everywhere.
   contact: {
     email: "hey@monaraproductions.com", // supplied by Shristi, 2026-11-26

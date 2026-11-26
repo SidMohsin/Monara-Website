@@ -2,10 +2,12 @@
 
 import { useRef, useState } from "react";
 import { Arrow } from "@/components/ui/Links";
+import { site } from "@/content/site";
 
-// Set NEXT_PUBLIC_FORM_ENDPOINT (e.g. a free Formspree / Web3Forms URL) to connect the form.
-// Until then the form validates but clearly states that nothing is sent.
-const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || "";
+// Enquiries are sent to the Formspree form in src/content/site.js (public URL, not a secret).
+// NEXT_PUBLIC_FORM_ENDPOINT in the hosting settings overrides it. Without either, the form
+// validates but clearly states that nothing is sent.
+const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || site.formEndpoint || "";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^[+()\d\s-]{7,20}$/;
